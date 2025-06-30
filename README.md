@@ -4,6 +4,23 @@
 | NIM | 312310454 |
 | Kelas | TI.23.A5 |
 | Mata Kuliah | Pemrograman Web 2 (Tugas akhir UAS) |
+---
+
+# Praktikum 7: Relasi Tabel dan Query Builder
+
+## Deskripsi
+Praktikum ini merupakan lanjutan dari sesi praktikum sebelumnya, dengan fokus pada pemahaman konsep relasi antar tabel dalam basis data. Pada kesempatan ini, peserta akan mempelajari cara menghubungkan dua tabel melalui relasi One-to-Many, serta menampilkan data yang saling berelasi menggunakan fitur Query Builder pada framework CodeIgniter 4. Seluruh praktik akan dijalankan dalam lingkungan lokal menggunakan Laragon sebagai local server.
+
+## Tujuan Praktikum
+1. Memahami konsep dasar relasi antar tabel, khususnya One-to-Many.
+
+2. Mengimplementasikan relasi antara tabel artikel dan kategori.
+
+3. Menggunakan Query Builder untuk melakukan join antar tabel.
+
+4. Menampilkan data artikel lengkap dengan nama kategorinya.
+
+--- 
 
 ## 1. Membuat Tabel `kategori`
 ```php
