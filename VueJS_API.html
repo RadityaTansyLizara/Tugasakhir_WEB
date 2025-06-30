@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manajemen Artikel</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    :root {
+      --bg: #121212;
+      --fg: #e0e0e0;
+      --input-bg: #1f1f1f;
+      --input-border: #333;
+      --primary: #2196f3;
+      --danger: #f44336;
+      --secondary: #555;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid var(--input-border);
+      border-radius: 4px;
+      background-color: var(--input-bg);
+      color: var(--fg);
+    }
+
+    button {
+      padding: 8px 14px;
+      margin: 2px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn {
+      &-edit { background: var(--primary); color: white; }
+      &-delete { background: var(--danger); color: white; }
+      &-nav { background: var(--secondary); color: white; }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    table, th, td {
+      border: 1px solid var(--input-border);
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    section {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .loading, .error {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .error {
+      color: var(--danger);
+    }
+
+    h1, h2 {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 8px 0 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>📰 Manajemen Artikel</h1>
+
+    <nav>
+      <button class="btn btn-nav" @click="showList">📄 Daftar</button>
+      <button class="btn btn-nav" @click="startTambah">➕ Tambah</button>
+    </nav>
+
+    <!-- Form Section -->
+    <section :class="{active: activeSection === 'form'}">
+      <form @submit.prevent="submitArticle">
+        <h2>{{ isEditing ? 'Edit' : 'Tambah' }} Artikel</h2>
+
+        <label>Judul</label>
+        <input v-model="form.title" required placeholder="Judul">
+
+        <label>Isi</label>
+        <textarea v-model="form.content" required placeholder="Isi"></textarea>
+
+        <label>Kategori</label>
+        <input v-model="form.category" placeholder="Kategori">
+
+        <label>Slug</label>
+        <input v-model="form.slug" placeholder="Slug">
+
+        <label>Tanggal (YYYY-MM-DD HH:MM:SS)</label>
+        <input v-model="form.created_at" placeholder="2025-01-01 12:00:00">
+
+        <button type="submit" class="btn btn-edit">{{ isEditing ? 'Update' : 'Simpan' }}</button>
+        <button type="button" @click="resetForm" class="btn btn-delete">Reset</button>
+      </form>
+    </section>
+
+    <!-- List Section -->
+    <section :class="{active: activeSection === 'list'}">
+      <div v-if="loading" class="loading">Memuat...</div>
+      <div v-else-if="error" class="error">{{ error }}</div>
+      <table v-else>
+        <thead>
+          <tr>
+            <th>ID</th><th>Judul</th><th>Kategori</th><th>Slug</th><th>Dibuat</th><th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="a in articles" :key="a.id">
+            <td>{{ a.id }}</td>
+            <td>{{ a.title }}</td>
+            <td>{{ a.category }}</td>
+            <td>{{ a.slug }}</td>
+            <td><time :datetime="a.created_at">{{ formatDate(a.created_at) }}</time></td>
+            <td>
+              <button @click="editArticle(a)" class="btn btn-edit">Edit</button>
+              <button @click="deleteArticle(a.id)" class="btn btn-delete">Hapus</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data: () => ({
+        articles: [],
+        form: {},
+        isEditing: false,
+        editingId: null,
+        activeSection: 'list',
+        loading: false,
+        error: null
+      }),
+      mounted() {
+        this.loadArticles();
+      },
+      methods: {
+        formatDate(date) {
+          return new Date(date).toLocaleString();
+        },
+        async loadArticles() {
+          this.loading = true;
+          this.error = null;
+          try {
+            const res = await axios.get('http://localhost:8080/api/articles');
+            this.articles = res.data;
+          } catch (err) {
+            this.error = 'Gagal memuat: ' + (err.response?.data?.message || err.message);
+          } finally {
+            this.loading = false;
+          }
+        },
+        async submitArticle() {
+          this.error = null;
+          const url = `http://localhost:8080/api/articles${this.isEditing ? `/${this.editingId}` : ''}`;
+          try {
+            const method = this.isEditing ? 'put' : 'post';
+            await axios[method](url, this.form);
+            await this.loadArticles();
+            this.resetForm();
+            this.showList();
+          } catch (err) {
+            this.error = `Gagal ${this.isEditing ? 'update' : 'tambah'}: ` + (err.response?.data?.message || err.message);
+          }
+        },
+        editArticle(article) {
+          this.form = { ...article };
+          this.isEditing = true;
+          this.editingId = article.id;
+          this.activeSection = 'form';
+        },
+        async deleteArticle(id) {
+          if (!confirm('Hapus artikel ini?')) return;
+          try {
+            await axios.delete(`http://localhost:8080/api/articles/${id}`);
+            await this.loadArticles();
+          } catch (err) {
+            this.error = 'Gagal hapus: ' + (err.response?.data?.message || err.message);
+          }
+        },
+        resetForm() {
+          this.form = {};
+          this.isEditing = false;
+          this.editingId = null;
+        },
+        startTambah() {
+          this.resetForm();
+          this.activeSection = 'form';
+        },
+        showList() {
+          this.activeSection = 'list';
+          this.loadArticles();
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
