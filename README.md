@@ -63,7 +63,7 @@ class KategoriModel extends Model
 }
 ```
 
-## Memodifikasi Controller `Artikel.php`
+## 5. Memodifikasi Controller `Artikel.php`
 Gunakan metode `getArtikelDenganKategori()` pada metode `index` dan `admin_index`. Sertakan pula filter berdasarkan `kategori_id`.
 
 Berikut adalah contoh pengambilan data artikel menggunakan operasi join:
@@ -331,7 +331,7 @@ class Artikel extends BaseController
 <?= $this->include('template/footer'); ?>
 ```
 
-## b. View artikel/admin_index.php
+### b. View artikel/admin_index.php
 ```php
 <?= $this->include('template/admin_header'); ?>
 <form method="get" class="form-search">
@@ -405,7 +405,7 @@ class Artikel extends BaseController
 <?= $this->include('template/admin_footer'); ?>
 ```
 
-## c. View artikel/form_add.php dan form_edit.php
+### c. View artikel/form_add.php dan form_edit.php
 `form_add.php`
 
 ```php
@@ -600,4 +600,4 @@ Salin folder project CodeIgniter 4 ke direktori:
 
 
 
->>>>>>> d79701976b3678095e3b12db4b2f459e76a609e3
+
