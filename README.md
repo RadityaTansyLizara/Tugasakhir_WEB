@@ -587,22 +587,22 @@ class Artikel extends BaseController
 
 ## 7. Pengujian Fitur
 a. Screenshoot Tampilan Daftar Artikel Beserta Kategori:
-![image](https://github.com/user-attachments/assets/2d89f3bb-0697-4fdb-96cb-dc42c05175d2)
+![Screenshot 2025-06-30 134805](https://github.com/user-attachments/assets/26949988-9ab4-43af-bde8-bc7c2e1a47b2)
 
 b. Screenshot Tampilan Tambah Artikel Baru dengan Kategori:
-![image](https://github.com/user-attachments/assets/020220cb-9db7-4392-b44f-2a5caecf9e10)
+![Screenshot 2025-06-30 135007](https://github.com/user-attachments/assets/eeaeb33f-b1ee-4eff-b6ea-222956c165a7)
 
 c. Screenshot Tampilan Edit Artikel dan Ubah Kategori:
-![image](https://github.com/user-attachments/assets/3865dd9a-df51-4ab4-aab4-5328e6bba8c3)
+![Screenshot 2025-06-30 135143](https://github.com/user-attachments/assets/36075145-1cfd-4d42-be82-f5fb5f5f654d)
 
 d. Screenshot Tampilan Setelah Edit Kategori:
-![image](https://github.com/user-attachments/assets/8a12d3cd-b4e8-4c25-9fe0-0f3e1f9ab906)
+![image](https://github.com/user-attachments/assets/48c16432-fa9f-4518-ba75-3fb63075b550)
 
 e. Screenshot Tampilan Hapus Artikel:
-![image](https://github.com/user-attachments/assets/62023cd6-6b1a-4107-8d5d-3edb17609f3e)
+![image](https://github.com/user-attachments/assets/f088a392-0e41-4c89-92d5-d4807b65901c)
 
 f. Screenshot Tampilan Setelah Hapus Artikel:
-![image](https://github.com/user-attachments/assets/6a46f4d1-0599-4f0e-bfa8-733bc1f07051)
+![image](https://github.com/user-attachments/assets/3fbca251-352a-4476-9a1f-f1138732ad47)
 
 
 ## Panduan Awal Menjalankan Web Menggunakan Laragon
