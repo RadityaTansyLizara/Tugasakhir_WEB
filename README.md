@@ -605,13 +605,6 @@ f. Screenshot Tampilan Setelah Hapus Artikel:
 ![image](https://github.com/user-attachments/assets/3fbca251-352a-4476-9a1f-f1138732ad47)
 
 
-## Panduan Awal Menjalankan Web Menggunakan Laragon
-### 1. Menyalakan Laragon
-Buka aplikasi Laragon
-Pastikan Apache dan MySQL sudah berjalan
-
-### 2. Menempatkan Folder Proyek
-Salin folder project CodeIgniter 4 ke direktori:
 
 
 
